@@ -71,7 +71,6 @@
         android:id="@+id/cellNW"
         android:layout_width="@dimen/cell_size"
         android:layout_height="@dimen/cell_size"
-        android:text=""
         android:theme="@style/cell"
         app:layout_constraintBottom_toTopOf="@+id/cellC"
         app:layout_constraintEnd_toStartOf="@+id/cellN" />
