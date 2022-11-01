@@ -18,6 +18,25 @@
         android:layout_marginTop="8dp"/>
 
 
+    <View
+        android:id = "@+id/redPlayerBar"
+        android:layout_width="@dimen/playerBarWidth"
+        android:layout_height="@dimen/playerBarHeight"
+        android:visibility="invisible"
+        android:background="@color/red"
+        app:layout_constraintBottom_toTopOf="@+id/secondPlayerScore"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/resetBtn" />
+
+    <View
+        android:id="@+id/bluePlayerBar"
+        android:layout_width="@dimen/playerBarWidth"
+        android:layout_height="@dimen/playerBarHeight"
+        android:visibility="visible"
+        android:background="@color/blue"
+        app:layout_constraintBottom_toTopOf="@+id/firstPlayerScore"
+        app:layout_constraintEnd_toStartOf="@+id/resetBtn"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/logotype"

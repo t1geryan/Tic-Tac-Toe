@@ -3,6 +3,7 @@ package com.example.tictactoe
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.telephony.CellIdentity
+import android.view.View
 import android.widget.TextView
 import com.example.tictactoe.databinding.ActivityMainBinding
 import android.widget.Toast
@@ -32,9 +33,20 @@ class MainActivity : AppCompatActivity() {
 
         with(binding.resetBtn) {
             setOnClickListener {
+                when(currentGlobalPlayer) {
+                    1 -> {
+                        binding.redPlayerBar.visibility = View.VISIBLE
+                        binding.bluePlayerBar.visibility = View.INVISIBLE
+                    }
+                    -1 -> {
+                        binding.redPlayerBar.visibility = View.INVISIBLE
+                        binding.bluePlayerBar.visibility = View.VISIBLE
+                    }
+                }
                 newGame(board)
                 binding.firstPlayerScore.text = "0"
                 binding.secondPlayerScore.text = "0"
+
             }
         }
 
@@ -43,15 +55,25 @@ class MainActivity : AppCompatActivity() {
     private fun makeMove(cell: TextView, board: Board) {
         if (cell.text.isEmpty()) {
             board.set(cell, currentPlayer)
-            val lastPlayer = currentPlayer
+            val lastPlayer = -board.getPlayer()
             changeCurrentPlayer()
+            when (lastPlayer) {
+                1 -> {
+                    binding.redPlayerBar.visibility = View.VISIBLE
+                    binding.bluePlayerBar.visibility = View.INVISIBLE
+                }
+                -1 -> {
+                    binding.redPlayerBar.visibility = View.INVISIBLE
+                    binding.bluePlayerBar.visibility = View.VISIBLE
+                }
+            }
             if (board.isWin()) {
                 Toast.makeText(
                     applicationContext,
-                    "Winner is ${if (-board.getPlayer() == 1) "Blue" else "Red"}",
+                    "Winner is ${if (lastPlayer == 1) "Blue" else "Red"}",
                     Toast.LENGTH_SHORT
                 ).show()
-                when (-board.getPlayer()) {
+                when (lastPlayer) {
                     1 -> upScore(binding.firstPlayerScore)
                     -1 -> upScore(binding.secondPlayerScore)
                 }
