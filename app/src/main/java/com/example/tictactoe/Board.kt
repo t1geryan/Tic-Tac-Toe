@@ -41,10 +41,8 @@ class Board(
     }
 
     fun set(cell: TextView, value: Int) {
-        if (cell.text.isEmpty()) {
-            setValue(cell, value, player)
-            changePlayer()
-        }
+        setValue(cell, value, player)
+        changePlayer()
     }
 
     fun isWin(): Boolean {

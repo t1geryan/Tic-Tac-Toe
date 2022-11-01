@@ -2,6 +2,7 @@ package com.example.tictactoe
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telephony.CellIdentity
 import android.widget.TextView
 import com.example.tictactoe.databinding.ActivityMainBinding
 import android.widget.Toast
@@ -31,28 +32,44 @@ class MainActivity : AppCompatActivity() {
 
         with(binding.resetBtn) {
             setOnClickListener {
-                if (board.isNotEmpty())
-                    newGame(board)
+                newGame(board)
+                binding.firstPlayerScore.text = "0"
+                binding.secondPlayerScore.text = "0"
             }
         }
 
     }
 
     private fun makeMove(cell: TextView, board: Board) {
-        board.set(cell, currentPlayer)
-        val lastPlayer = currentPlayer
-        changeCurrentPlayer()
-        if (board.isWin()) {
-            Toast.makeText(applicationContext, "Winner is ${if (-board.getPlayer() == 1) "Blue" else "Red"}", Toast.LENGTH_SHORT).show()
-            newGame(board)
-        } else if (board.isFull()){
-            Toast.makeText(applicationContext, "It's a Draw", Toast.LENGTH_SHORT).show()
-            newGame(board)
+        if (cell.text.isEmpty()) {
+            board.set(cell, currentPlayer)
+            val lastPlayer = currentPlayer
+            changeCurrentPlayer()
+            if (board.isWin()) {
+                Toast.makeText(
+                    applicationContext,
+                    "Winner is ${if (-board.getPlayer() == 1) "Blue" else "Red"}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                when (-board.getPlayer()) {
+                    1 -> upScore(binding.firstPlayerScore)
+                    -1 -> upScore(binding.secondPlayerScore)
+                }
+
+                newGame(board)
+            } else if (board.isFull()) {
+                Toast.makeText(applicationContext, "It's a Draw", Toast.LENGTH_SHORT).show()
+                newGame(board)
+            }
         }
     }
 
+    private fun upScore(scoreView: TextView) {
+        val score = scoreView.text.toString().toInt()
+        scoreView.text = (score+1).toString()
+    }
     private fun newGame(board: Board) {
-        Thread.sleep(500)
+        Thread.sleep(100)
         board.clear()
         currentGlobalPlayer *= -1
         currentPlayer = 1
