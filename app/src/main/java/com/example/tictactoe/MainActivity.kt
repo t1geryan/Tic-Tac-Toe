@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         val board = Board(listOf(
             listOf(binding.cellNW, binding.cellN, binding.cellNE),
             listOf(binding.cellW, binding.cellC, binding.cellE),
@@ -51,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
     private fun makeMove(cell: TextView, board: Board) {
         if (cell.text.isEmpty()) {
